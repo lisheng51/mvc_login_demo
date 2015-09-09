@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Profiel - Edit form</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+
+        <p>Welcome : ##firstname## ##surname## </p>
+        <p>You group: <a href="##groupurl##">##groupname##</a></p>
+        <p>You access list: ##accesslist##  </p>
+        <hr>
+        <h3>Edit your data</h3>
+        <form action="" method="post">
+            <p>Firstname:<input name="firstname" type="text" value="##firstname##"></p>
+            <p>Surname:<input name="surname" type="text" value="##surname##"></p>
+            <p>Email:<input name="email" type="text" value="##email##"></p>
+            <p>Sex:<select name="gender">
+                    <option value="">Choose</option>
+                    <option value="male" ##getgendervalue## >Man</option>
+                    <option value="female" ##getgendervalue2## >Woman</option>
+                </select></p>
+            <input name="submit" type="submit" value="Save">
+        </form>
+
+
+        <p><a href="/logout">Log Out</a></p>
+
+    </body>
+</html>
