@@ -34,5 +34,3 @@ if (empty($controller) === false) {
 } else {
     echo "no controller";
 }
-
-
