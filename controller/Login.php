@@ -12,7 +12,7 @@ class Login
 
     /**
      *
-     * @var object 
+     * @var object
      */
     private $obj_login;
 
@@ -22,11 +22,6 @@ class Login
     public function __construct()
     {
         $this->obj_login = new \model\Login();
-
-        if ($this->obj_login->checkSession() === true) {
-            header("location: /profiel");
-            exit();
-        }
     }
 
     /**
@@ -34,34 +29,34 @@ class Login
      */
     public function execute()
     {
-        if (isset($_POST['submit']) === true) {
-            $this->checkData();
-            $arr_user = $this->obj_login->fetchData();
-
-            if (empty($arr_user) === true) {
-                return $this->showForm(\core\ErrorMsg::user("invalid"));
-                exit();
-            }
-
-            if ($this->obj_login->checkHash($arr_user) === true) {
-                header("location: /profiel");
-                exit();
-            }
-        } else {
-            $this->showForm();
+        if ($this->obj_login->checkSession() === true) {
+            header("location: /profiel");
+            exit();
         }
-    }
 
-    /**
-     * Check post data
-     *
-     * @return string
-     */
-    private function checkData()
-    {
+        if (isset($_POST['submit']) === false) {
+            return $this->showForm();
+        }
+
+        if (\core\Session::checkToken() === false) {
+            return $this->showForm(\core\ErrorMsg::user("token"));
+        }
+
         if ($this->obj_login->checkData() === false) {
             return $this->showForm(\core\ErrorMsg::user("emptyckdata"));
         }
+
+        $arr_user = $this->obj_login->fetchData();
+        if (empty($arr_user) === true) {
+            return $this->showForm(\core\ErrorMsg::user("invalid"));
+        }
+
+        if ($this->obj_login->makeHash($arr_user) === true) {
+            header("location: /profiel");
+            exit();
+        }
+
+        return $this->showForm(\core\ErrorMsg::user("error"));
     }
 
     /**
@@ -75,7 +70,8 @@ class Login
         $temp = new \core\Template("index");
         $form = new \core\Template("form/login");
         $form->set("message", $message);
-        $temp->set("form", $form->parse());
+        $form->set("token", \core\Session::token());
+        $temp->setRaw("form", $form->parse());
         return $temp->execute();
     }
 

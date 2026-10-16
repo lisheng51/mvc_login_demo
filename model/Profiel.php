@@ -55,6 +55,16 @@ class Profiel extends User
     }
 
     /**
+     * Check if user is admin
+     * 
+     * @return boolean
+     */
+    public function isAdmin()
+    {
+        return $this->isadmin;
+    }
+
+    /**
      * Show access value
      * 
      * @return string $string

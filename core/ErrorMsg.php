@@ -26,6 +26,15 @@ class ErrorMsg
             case 'invalid':
                 return "username or password is invalid!";
                 break;
+            case 'token':
+                return "Form is expired, please try again!";
+                break;
+            case 'email':
+                return "Email is invalid!";
+                break;
+            case 'saved':
+                return "Your data is saved!";
+                break;
             default:
                 return "no define type";
                 break;
@@ -45,7 +54,7 @@ class ErrorMsg
                 $str_msg = "no define number";
                 break;
         }
-        return "Lis Error($num): " . $msg;
+        return "Lis Error($num): " . $str_msg;
     }
     
     public static function module($type)

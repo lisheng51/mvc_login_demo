@@ -52,18 +52,31 @@ class Template
         $file = $this->path . $template . '.html';
         if (file_exists($file) === true) {
             $this->template = file_get_contents($file);
+        } else {
+            throw new \Exception("Template not found: $template");
         }
     }
 
     /**
-     * Set value to template
+     * Set value to template, value is html escaped
      * 
      * @param string $var
      * @param string $content
      */
     public function set($var, $content)
     {
-        $this->template = str_replace("##" . $var . "##", $content, $this->template);
+        $this->setRaw($var, htmlspecialchars((string) $content, ENT_QUOTES, 'UTF-8'));
+    }
+
+    /**
+     * Set html to template without escape, only use for trusted html
+     * 
+     * @param string $var
+     * @param string $content
+     */
+    public function setRaw($var, $content)
+    {
+        $this->template = str_replace("##" . $var . "##", (string) $content, $this->template);
     }
 
     /**
@@ -81,7 +94,7 @@ class Template
      */
     public function execute()
     {
-        $this->template = preg_replace('^##.*##^', "", $this->template);
+        $this->template = preg_replace('/##\w+##/', "", $this->template);
         echo $this->template;
     }
 

@@ -25,12 +25,16 @@ class Logout
     }
 
     /**
-     * Execute
+     * Execute, only logout with post and valid token
      */
     public function execute()
     {
-        \core\Session::remove($this->obj_login->loginsession);
-        header("location: /login");
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && \core\Session::checkToken() === true) {
+            $this->obj_login->logout();
+            header("location: /login");
+        } else {
+            header("location: /profiel");
+        }
         exit();
     }
 

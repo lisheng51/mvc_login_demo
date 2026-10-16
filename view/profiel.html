@@ -26,11 +26,16 @@ and open the template in the editor.
                     <option value="male" ##getgendervalue## >Man</option>
                     <option value="female" ##getgendervalue2## >Woman</option>
                 </select></p>
+            <input name="token" type="hidden" value="##token##">
             <input name="submit" type="submit" value="Save">
+            <span>##message##</span>
         </form>
 
 
-        <p><a href="/logout">Log Out</a></p>
+        <div><form action="/logout" method="post" style="display:inline">
+            <input name="token" type="hidden" value="##token##">
+            <input type="submit" value="Log Out">
+        </form></div>
 
     </body>
 </html>

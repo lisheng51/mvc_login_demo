@@ -27,9 +27,9 @@ class LisPDO
     private function __construct()
     {
         self::$isConnected = true;
-        $str_setting = "mysql:host=" . DATABASE_HOST . ";dbname=" . DATABASE_NAME . ";port=" . DATABASE_PORT . ", " . DATABASE_USER . ", " . DATABASE_PASS . "";
+        $str_setting = "mysql:host=" . DATABASE_HOST . ";dbname=" . DATABASE_NAME . ";port=" . DATABASE_PORT . ";charset=utf8mb4";
         try {
-            self::$db = new \PDO($str_setting);
+            self::$db = new \PDO($str_setting, DATABASE_USER, DATABASE_PASS);
             self::$db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         } catch (\PDOException $e) {
             self::$isConnected = false;
