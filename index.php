@@ -9,28 +9,28 @@ RewriteRule ^(.*)$ index.php?c=$1 [L]
 require 'config.php';
 
 $controller = null;
-if (isset($_GET['c']) === true) {
-    $controller = $_GET['c'];
+if (isset($_GET['c']) === true && is_string($_GET['c']) === true) {
+    $controller = trim($_GET['c'], '/');
 }
 
-if (empty($controller) === false) {
-    switch ($controller) {
-        case "login":
-            $obj = new \controller\Login();
-            $obj->execute();
-            break;
-        case "logout":
-            $obj = new \controller\Logout();
-            $obj->execute();
-            break;
-        case "profiel":
-            $obj = new \controller\Profiel();
-            $obj->execute();
-            break;
-        default:
-            echo "none";
-            break;
-    }
+$routes = array(
+    "login" => "\\controller\\Login",
+    "register" => "\\controller\\Register",
+    "logout" => "\\controller\\Logout",
+    "profiel" => "\\controller\\Profiel",
+    "admin" => "\\controller\\Admin",
+    "member" => "\\controller\\Member",
+);
+
+if (empty($controller) === true) {
+    header("location: /login");
+    exit();
+}
+
+if (isset($routes[$controller]) === true) {
+    $obj = new $routes[$controller]();
+    $obj->execute();
 } else {
-    echo "no controller";
+    http_response_code(404);
+    echo "Page not found";
 }

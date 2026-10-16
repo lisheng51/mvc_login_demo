@@ -12,6 +12,9 @@ and open the template in the editor.
     </head>
     <body>
         <p> Welcome : ##name##</p>
-        <p><a href="profiel.php">Profiel</a> | <a href="logout.php">Log Out</a></p>
+        <div><a href="/profiel">Profiel</a> | <form action="/logout" method="post" style="display:inline">
+            <input name="token" type="hidden" value="##token##">
+            <input type="submit" value="Log Out">
+        </form></div>
     </body>
 </html>
