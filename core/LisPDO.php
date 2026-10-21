@@ -27,10 +27,11 @@ class LisPDO
     private function __construct()
     {
         self::$isConnected = true;
-        $str_setting = "mysql:host=" . DATABASE_HOST . ";dbname=" . DATABASE_NAME . ";port=" . DATABASE_PORT . ";charset=utf8mb4";
+        $str_setting = "pgsql:host=" . DATABASE_HOST . ";port=" . DATABASE_PORT . ";dbname=" . DATABASE_NAME;
         try {
             self::$db = new \PDO($str_setting, DATABASE_USER, DATABASE_PASS);
             self::$db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            self::$db->exec("SET client_encoding TO 'UTF8'");
         } catch (\PDOException $e) {
             self::$isConnected = false;
             throw new \Exception($e->getMessage());

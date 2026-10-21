@@ -57,12 +57,12 @@ class Login extends Model
     {
         $sql_fetch = "
             SELECT
-                `uid`,
-                `password`
+                uid,
+                password
             FROM
-                `user_login`
+                user_login
             WHERE
-                `username` = :username
+                lower(username) = lower(:username)
             LIMIT
                 1
         ";
@@ -164,11 +164,11 @@ class Login extends Model
         }
         $sql_fetch = "
             SELECT
-                `hash`
+                hash
             FROM
-                `user_login`
+                user_login
             WHERE
-                `uid` = :uid
+                uid = :uid
             LIMIT
                 1
         ";
@@ -216,11 +216,11 @@ class Login extends Model
 
         $sql_update = "
             UPDATE
-                `user_login`
+                user_login
             SET
-                `hash`= :hash
+                hash= :hash
             WHERE
-                `uid` = :uid
+                uid = :uid
         ";
 
         try {
@@ -245,11 +245,11 @@ class Login extends Model
     {
         $sql_update = "
             UPDATE
-                `user_login`
+                user_login
             SET
-                `password`= :password
+                password= :password
             WHERE
-                `uid` = :uid
+                uid = :uid
         ";
 
         try {
