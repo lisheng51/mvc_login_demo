@@ -17,14 +17,14 @@ date_default_timezone_set('Europe/London');
 define('ROOT_DIR', dirname(__FILE__));
 
 /**
- * Define database setting
+ * Define database setting (PostgreSQL)
  * Values can be overridden with environment variables
  */
-define('DATABASE_PORT', getenv('DB_PORT') ?: 3306);
+define('DATABASE_PORT', getenv('DB_PORT') ?: 5432);
 define('DATABASE_HOST', getenv('DB_HOST') ?: 'localhost');
 define('DATABASE_NAME', getenv('DB_NAME') ?: 'test');
-define('DATABASE_USER', getenv('DB_USER') ?: 'root');
-define('DATABASE_PASS', getenv('DB_PASS') ?: 'root');
+define('DATABASE_USER', getenv('DB_USER') ?: 'postgres');
+define('DATABASE_PASS', getenv('DB_PASS') ?: 'postgres');
 
 /**
  * Autoload class with namespace

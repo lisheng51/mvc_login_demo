@@ -52,11 +52,11 @@ class Register extends Model
     {
         $sql_fetch = "
             SELECT
-                `uid`
+                uid
             FROM
-                `user_login`
+                user_login
             WHERE
-                `username` = :username
+                lower(username) = lower(:username)
             LIMIT
                 1
         ";
@@ -75,13 +75,15 @@ class Register extends Model
     {
         $sql_login = "
             INSERT INTO
-                `user_login` (`username`, `password`)
+                user_login (username, password)
             VALUES
                 (:username, :password)
+            RETURNING
+                uid
         ";
         $sql_user = "
             INSERT INTO
-                `users` (`uid`, `firstname`, `surname`, `email`, `gender`, `group`)
+                users (uid, firstname, surname, email, gender, \"group\")
             VALUES
                 (:uid, :firstname, :surname, '', '', 1)
         ";
@@ -92,7 +94,7 @@ class Register extends Model
             $obj_result->bindValue("username", $this->arr_data["username"], \PDO::PARAM_STR);
             $obj_result->bindValue("password", password_hash($this->arr_data["password"], PASSWORD_DEFAULT), \PDO::PARAM_STR);
             $obj_result->execute();
-            $uid = (int) $this->obj_db->lastInsertId();
+            $uid = (int) $obj_result->fetchColumn();
 
             $obj_result = $this->obj_db->prepare($sql_user);
             $obj_result->bindValue("uid", $uid, \PDO::PARAM_INT);

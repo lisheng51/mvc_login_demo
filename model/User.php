@@ -66,9 +66,9 @@ class User extends Model
             SELECT
                 *
             FROM
-               `users`
+               users
             WHERE
-              `uid` = :uid
+              uid = :uid
         ";
         try {
             $obj_result = $this->obj_db->prepare($sql_fetch);
@@ -104,14 +104,14 @@ class User extends Model
 
         $sql_update = "
             UPDATE
-                `users`
+                users
             SET
-                `firstname` = :firstname,
-                `surname` = :surname,
-                `email` = :email,
-                `gender` = :gender
+                firstname = :firstname,
+                surname = :surname,
+                email = :email,
+                gender = :gender
             WHERE
-                `uid` = :uid
+                uid = :uid
         ";
         try {
             $obj_result = $this->obj_db->prepare($sql_update);
